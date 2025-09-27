@@ -207,6 +207,7 @@ def build_transform_pipeline(dataset, cfg):
         "cifar10": ((0.4914, 0.4822, 0.4465), (0.2470, 0.2435, 0.2616)),
         "cifar100": ((0.5071, 0.4865, 0.4409), (0.2673, 0.2564, 0.2762)),
         "stl10": ((0.4914, 0.4823, 0.4466), (0.247, 0.243, 0.261)),
+        "svhn": ((0.4377, 0.4438, 0.4728), (0.1980, 0.2010, 0.1970)),
         "imagenet100": (IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD),
         "imagenet": (IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD),
     }
@@ -331,6 +332,14 @@ def prepare_datasets(
         train_dataset = dataset_with_index(STL10)(
             train_data_path,
             split="train+unlabeled",
+            download=download,
+            transform=transform,
+        )
+
+    elif dataset == "svhn":
+        train_dataset = dataset_with_index(torchvision.datasets.SVHN)(
+            train_data_path,
+            split="train",
             download=download,
             transform=transform,
         )

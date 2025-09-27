@@ -241,7 +241,7 @@ def compute_dataset_size(
     no_labels: Optional[bool] = False,
     data_fraction: Optional[float] = -1,
 ):
-    """Utility function to get the dataset size. If using cifar or stl,
+    """Utility function to get the dataset size. If using cifar, svhn or stl,
     provide dataset and the train flag.
     E.g., compute_dataset_size(dataset='cifar10', train=True/False).
     When using an ImageFolder dataset, just provide the path to the folder and
@@ -249,7 +249,7 @@ def compute_dataset_size(
 
     Args:
         dataset (Optional[str]): dataset size for predefined datasets
-            [cifar10, cifar100, stl10]. Defaults to None.
+            [cifar10, cifar100, stl10, svhn]. Defaults to None.
         train (Optional[bool]): train dataset flag. Defaults to True.
         data_path (Optional[str]): path to the folder. Defaults to None.
         data_format (Optional[str]): format of the data, either "image_folder" or "h5".
@@ -265,6 +265,7 @@ def compute_dataset_size(
         "cifar10": {"train": 50_000, "val": 10_000},
         "cifar100": {"train": 50_000, "val": 10_000},
         "stl10": {"train": 105_000, "val": 8_000},
+        "svhn": {"train": 73_257, "val": 26_032},
     }
     size = None
 

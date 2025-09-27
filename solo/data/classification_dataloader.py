@@ -109,6 +109,22 @@ def prepare_transforms(dataset: str) -> Tuple[nn.Module, nn.Module]:
         ),
     }
 
+    svhn_pipeline = {
+        "T_train": transforms.Compose(
+            [
+                transforms.RandomCrop(32, padding=4),
+                transforms.ToTensor(),
+                transforms.Normalize((0.4377, 0.4438, 0.4728), (0.1980, 0.2010, 0.1970)),
+            ]
+        ),
+        "T_val": transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.4377, 0.4438, 0.4728), (0.1980, 0.2010, 0.1970)),
+            ]
+        ),
+    }
+
     imagenet_pipeline = {
         "T_train": transforms.Compose(
             [
@@ -134,6 +150,7 @@ def prepare_transforms(dataset: str) -> Tuple[nn.Module, nn.Module]:
         "cifar10": cifar_pipeline,
         "cifar100": cifar_pipeline,
         "stl10": stl_pipeline,
+        "svhn": svhn_pipeline,
         "imagenet100": imagenet_pipeline,
         "imagenet": imagenet_pipeline,
         "custom": custom_pipeline,
@@ -185,7 +202,7 @@ def prepare_datasets(
         sandbox_folder = Path(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
         val_data_path = sandbox_folder / "datasets"
 
-    assert dataset in ["cifar10", "cifar100", "stl10", "imagenet", "imagenet100", "custom"]
+    assert dataset in ["cifar10", "cifar100", "stl10", "svhn", "imagenet", "imagenet100", "custom"]
 
     if dataset in ["cifar10", "cifar100"]:
         DatasetClass = vars(torchvision.datasets)[dataset.upper()]
@@ -211,6 +228,20 @@ def prepare_datasets(
             transform=T_train,
         )
         val_dataset = STL10(
+            val_data_path,
+            split="test",
+            download=download,
+            transform=T_val,
+        )
+
+    elif dataset == "svhn":
+        train_dataset = torchvision.datasets.SVHN(
+            train_data_path,
+            split="train",
+            download=download,
+            transform=T_train,
+        )
+        val_dataset = torchvision.datasets.SVHN(
             val_data_path,
             split="test",
             download=download,
