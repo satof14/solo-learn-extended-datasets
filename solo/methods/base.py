@@ -201,6 +201,11 @@ class BaseMethod(pl.LightningModule):
                     3, 64, kernel_size=3, stride=1, padding=2, bias=False
                 )
                 self.backbone.maxpool = nn.Identity()
+            elif cfg.data.dataset == "tinyimagenet":
+                self.backbone.conv1 = nn.Conv2d(
+                    3, 64, kernel_size=3, stride=1, padding=1, bias=False
+                )
+                self.backbone.maxpool = nn.Identity()
         else:
             self.features_dim: int = self.backbone.num_features
         ##############################
@@ -648,6 +653,11 @@ class BaseMomentumMethod(BaseMethod):
             if cifar:
                 self.momentum_backbone.conv1 = nn.Conv2d(
                     3, 64, kernel_size=3, stride=1, padding=2, bias=False
+                )
+                self.momentum_backbone.maxpool = nn.Identity()
+            elif cfg.data.dataset == "tinyimagenet":
+                self.momentum_backbone.conv1 = nn.Conv2d(
+                    3, 64, kernel_size=3, stride=1, padding=1, bias=False
                 )
                 self.momentum_backbone.maxpool = nn.Identity()
 

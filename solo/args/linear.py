@@ -22,6 +22,7 @@ _N_CLASSES_PER_DATASET = {
     "svhn": 10,
     "imagenet": 1000,
     "imagenet100": 100,
+    "tinyimagenet": 200,
 }
 
 
@@ -32,6 +33,7 @@ _SUPPORTED_DATASETS = [
     "svhn",
     "imagenet",
     "imagenet100",
+    "tinyimagenet",
     "custom",
 ]
 
