@@ -39,6 +39,7 @@ from solo.backbones import (
     poolformer_s24,
     poolformer_s36,
     resnet18,
+    resnet34,
     resnet50,
     swin_base,
     swin_large,
@@ -73,6 +74,7 @@ def static_lr(
 class BaseMethod(pl.LightningModule):
     _BACKBONES = {
         "resnet18": resnet18,
+        "resnet34": resnet34,
         "resnet50": resnet50,
         "vit_tiny": vit_tiny,
         "vit_small": vit_small,
